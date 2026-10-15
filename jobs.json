@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Associate Product Manager",
+    "company": "Fintech Startup",
+    "category": "Product Management",
+    "location": "Remote / Bangalore",
+    "url": "https://example.com/careers/apm"
+  },
+  {
+    "title": "Business Analyst",
+    "company": "D2C Brand",
+    "category": "Business Analytics",
+    "location": "Hyderabad (Hybrid)",
+    "url": "https://example.com/careers/analyst"
+  },
+  {
+    "title": "Business Development Executive",
+    "company": "SaaS Platform",
+    "category": "Business Development",
+    "location": "Remote",
+    "url": "https://example.com/careers/bde"
+  },
+  {
+    "title": "Junior Project Manager",
+    "company": "Tech Agency",
+    "category": "Project Management",
+    "location": "Mumbai",
+    "url": "https://example.com/careers/pm"
+  }
+]
