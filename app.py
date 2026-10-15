@@ -5,19 +5,32 @@ import streamlit as st
 st.set_page_config(
     page_title="SGigs | Direct-to-Source Jobs",
     page_icon="🎯",
-    layout="wide",
+    layout="centered",
 )
 
-# Header Section
-st.title("SGigs 🚀")
+# Custom Styling & Header
 st.markdown(
-    "**Zero-Noise, Privacy-First Job Board.** No profiles, no social feeds,"
-    " no algorithms. Just direct links to official company career pages."
+    """
+    <style>
+    .main-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0px; }
+    .subtitle { color: #666; font-size: 1.1rem; margin-bottom: 20px; }
+    .job-card { padding: 20px; border-radius: 10px; border: 1px solid #e0e0e0; margin-bottom: 15px; background-color: #ffffff; }
+    </style>
+""",
+    unsafe_allow_html=True,
+)
+
+st.markdown('<p class="main-title">SGigs 🚀</p>', unsafe_allow_html=True)
+st.markdown(
+    '<p class="subtitle">Zero-Noise, Privacy-First Job Board. No profiles,'
+    " social feeds, or algorithms. Just direct links to official company"
+    " career pages.</p>",
+    unsafe_allow_html=True,
 )
 st.divider()
 
 
-# Load Job Data Safely
+# Load Data Safely
 @st.cache_data
 def load_data():
   return pd.read_json("jobs.json")
@@ -30,7 +43,7 @@ except Exception as e:
   df = pd.DataFrame(columns=["title", "company", "category", "location", "url"])
 
 # Sidebar Filters
-st.sidebar.header("Filter Roles")
+st.sidebar.header("Filters")
 selected_category = st.sidebar.selectbox(
     "Select Domain",
     [
@@ -42,15 +55,16 @@ selected_category = st.sidebar.selectbox(
     ],
 )
 
-# Apply Category Filter
+# Filter by Category
 if selected_category != "All":
   filtered_df = df[df["category"] == selected_category]
 else:
   filtered_df = df
 
-# Main Search Bar
+# Search Bar
 search_query = st.text_input(
-    "🔍 Search by keyword (e.g., Company name, role title):"
+    "🔍 Search roles or companies:",
+    placeholder="e.g., Razorpay, Analyst, Remote",
 )
 if search_query:
   filtered_df = filtered_df[
@@ -62,20 +76,24 @@ if search_query:
       )
   ]
 
-# Display Results Count
-st.subheader(f"Available Positions ({len(filtered_df)} listings found)")
+# Results Header
+st.subheader(f"Open Positions ({len(filtered_df)})")
 st.write("")
 
-# Render Job Cards
-for index, row in filtered_df.iterrows():
-  with st.container():
-    col1, col2 = st.columns([4, 1])
-    with col1:
-      st.markdown(f"### {row['title']}")
-      st.write(
-          f"🏢 **{row['company']}** &nbsp;|&nbsp; 📍 `{row['location']}`"
-          f" &nbsp;|&nbsp; 📂 `{row['category']}`"
-      )
-    with col2:
-      st.markdown(f"[Apply Directly]({row['url']})")
-    st.divider()
+# Render Smooth Job Cards & Real Links
+if filtered_df.empty:
+  st.info("No matching roles found right now. Try a different search filter!")
+else:
+  for index, row in filtered_df.iterrows():
+    st.markdown(
+        f"""
+        <div class="job-card">
+            <h3>{row['title']}</h3>
+            <p>🏢 <b>{row['company']}</b> &nbsp;|&nbsp; 📍 <code>{row['location']}</code> &nbsp;|&nbsp; 📂 <code>{row['category']}</code></p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    # Direct Official Link Button
+    st.link_button("Apply Directly on Career Page ➔", row["url"])
+    st.write("")
