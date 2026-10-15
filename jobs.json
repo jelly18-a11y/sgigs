@@ -26,5 +26,19 @@
     "category": "Project Management",
     "location": "Mumbai",
     "url": "https://example.com/careers/pm"
+  },
+  {
+    "title": "Associate Product Manager",
+    "company": "Razorpay",
+    "category": "Product Management",
+    "location": "Bengaluru (Hybrid)",
+    "url": "https://razorpay.com/jobs/"
+  },
+  {
+    "title": "Business Analyst - Growth",
+    "company": "Zepto",
+    "category": "Business Analytics",
+    "location": "Mumbai / Remote",
+    "url": "https://www.zeptonow.com/careers"
   }
-]
+]   
